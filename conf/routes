@@ -11,12 +11,6 @@ GET     /save                       controllers.TaskController.save
 GET     /remove/:taskId             controllers.TaskController.remove(taskId: Long)
 GET     /tasks                      controllers.TaskController.listTasks
 
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
