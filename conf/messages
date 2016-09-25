@@ -1,0 +1,6 @@
+application.name = My Todo Task
+
+task.details = Todo Details
+task.new.name = Add New Todo
+task.title.name = Task Name
+task.title.status = Status
