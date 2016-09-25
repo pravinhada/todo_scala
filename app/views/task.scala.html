@@ -1,0 +1,15 @@
+@(taskForm: Form[TaskForm])(implicit messages: Messages)
+@import helper._
+
+@main(Messages("application.name")) {
+    @helper.form(action = routes.TaskController.save()) {
+        <fieldset>
+            <b>@Messages("task.new.name")</b>
+            @helper.inputText(taskForm("name"))
+            @checkbox(taskForm("finished"))
+            <p>
+                <button type="submit" class="btn btn-default"><span class="icon-plus-sign"></span> Add</button>
+            </p>
+        </fieldset>
+    }
+}

@@ -1,0 +1,18 @@
+@(tasks: Seq[Task])(implicit messages: Messages)
+
+@main(Messages("application.name")) {
+    <table class="tasks">
+        <tr>
+            <td><b>@Messages("task.title.name")</b></td>
+            <td><b>@Messages("task.title.status")</b></td>
+        </tr>
+        @for(task <- tasks) {
+            <tr>
+                <td><a href="@routes.TaskController.detail(task.id)">@task.name</a></td>
+                <td>@if(task.finished) { <span class="icon-ok" title="Finished Task"></span> } else { <span class="icon-time" title="Task in progress"></span> }</td>
+            </tr>
+        }
+    </table>
+    <br/>
+    <a href="@routes.TaskController.newTask()"><button type="button" class="btn btn-default"><span class="icon-plus-sign"></span> Add</button></a>
+}

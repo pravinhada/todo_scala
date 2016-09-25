@@ -1,0 +1,16 @@
+@(task: Task)(implicit lang: Lang, messages: Messages)
+
+@main(Messages("application.name")) {
+    <p><b>@Messages("task.details")</b></p>
+    <dl class="dl-horizontal">
+        <dt>Task name:</dt>
+        <dd>@task.name</dd>
+        <dt>Task Status:</dt>
+        <dd>@if(task.finished) { Finished } else { Active }</dd>
+        <dt>Created At:</dt>
+        <dd>@task.createdAt</dd>
+        <dt>Updated At:</dt>
+        <dd>@task.updatedAt</dd>
+    </dl>
+    <a href="@routes.TaskController.remove(task.id)"><button type="button" class="btn btn-default"><span class="icon-trash"></span> Delete</button></a>
+}
