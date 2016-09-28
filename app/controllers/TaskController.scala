@@ -23,23 +23,21 @@ class TaskController @Inject() (val messagesApi: MessagesApi, taskRepo: TaskRepo
     Redirect(routes.TaskController.list())
   }
 
-  def newTask = Action { implicit  request =>
-    val form = if (request.flash.get("error").isDefined) taskForm.bind(request.flash.data) else taskForm
-    Ok(views.html.task(form))
+  def newTask = Action {
+    Ok(views.html.task(taskForm))
   }
 
-  def save = Action(parse.form(taskForm)) { implicit request =>
+  def save = Action { implicit request =>
     val formData = taskForm.bindFromRequest()
     formData.fold(
-      hasErrors = {form => Redirect(routes.TaskController.newTask())
-      },
-      success = { newTask =>
+      formWithErrors => Ok(views.html.task(formWithErrors)),
+      value => {
         val time = new Timestamp(new Date().getTime)
-        val task = Task(1, newTask.name, newTask.finished, time, time)
+        val task = Task(1, value.name, value.finished, time, time)
         taskRepo.addTask(task)
+        Redirect(routes.TaskController.list())
       }
     )
-    Redirect(routes.TaskController.list())
   }
 
   def list = Action.async { implicit  request =>

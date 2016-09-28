@@ -7,7 +7,7 @@ GET     /                           controllers.TaskController.index
 GET     /todos                      controllers.TaskController.list
 GET     /todos/:taskId              controllers.TaskController.detail(taskId: Long)
 GET     /newTask                    controllers.TaskController.newTask
-GET     /save                       controllers.TaskController.save
+POST    /newTask                    controllers.TaskController.save
 GET     /remove/:taskId             controllers.TaskController.remove(taskId: Long)
 
 # REST API Calls
