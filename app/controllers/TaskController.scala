@@ -10,8 +10,6 @@ import play.api.data.Form
 import play.api.data.Forms.{boolean, mapping, nonEmptyText}
 import play.api.mvc.{Action, Controller}
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.libs.json.{JsPath, Json, Writes}
-import play.api.libs.functional.syntax._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
@@ -51,19 +49,5 @@ class TaskController @Inject() (val messagesApi: MessagesApi, taskRepo: TaskRepo
   def remove(taskId: Long) = Action { implicit request =>
     taskRepo.removeTask(taskId)
     Redirect(routes.TaskController.list())
-  }
-
-  /**
-    * Return the list in JSON format REST call
-    */
-  def listTasks = Action.async {
-    implicit val taskFormat: Writes[Task] = (
-      (JsPath \ "id").write[Long] and
-      (JsPath \ "name").write[String] and
-      (JsPath \ "finished").write[Boolean] and
-      (JsPath \ "createdAt").write[Timestamp] and
-      (JsPath \ "updatedAt").write[Timestamp]
-      )(unlift(Task.unapply))
-    taskRepo.getAllTask map(seq => Ok(Json.toJson(seq.toList)))
   }
 }

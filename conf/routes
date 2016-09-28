@@ -11,7 +11,9 @@ POST    /newTask                    controllers.TaskController.save
 GET     /remove/:taskId             controllers.TaskController.remove(taskId: Long)
 
 # REST API Calls
-GET     /tasks                      controllers.TaskController.listTasks
+GET     /tasks                      controllers.RestController.listTasks(completed: Boolean ?= false)
+GET     /task/:taskId               controllers.RestController.task(taskId: Long)
+GET     /task/:taskId/edit          controllers.RestController.edit(taskId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

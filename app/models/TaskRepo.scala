@@ -11,6 +11,7 @@ import scala.concurrent.Future
 trait TaskRepo {
   def addTask(task: Task): Future[Long]
   def getAllTask: Future[Seq[Task]]
+  def getAllTaskByStatus(completed: Boolean): Future[Seq[Task]]
   def findTaskById(id: Long): Future[Task]
   def removeTask(id: Long)
 }
@@ -26,6 +27,8 @@ class TaskRepoImpl @Inject()(protected val dbConfigProvider: DatabaseConfigProvi
   def addTask(task: Task): Future[Long] = db.run(tasks returning tasks.map(_.id) += task)
 
   def getAllTask: Future[Seq[Task]] = db.run(tasks.result)
+
+  def getAllTaskByStatus(completed: Boolean): Future[Seq[Task]] = db.run(tasks.filter(_.finished === completed).result)
 
   def findTaskById(taskId: Long): Future[Task] = db.run(tasks.filter(_.id === taskId).result.head)
 
